@@ -4,15 +4,16 @@ export const empresaPaths = {
     get: {
       tags: ["Empresas"],
       summary: "Lista todas as empresas",
+      description: "**Acesso exclusivo: Admin.** Retorna a listagem completa da base de dados de empresas para controle e auditoria.",
       security: [
         { bearerAuth: [] } // Protege a rota exigindo o token JWT
       ],
       responses: {
         200: { 
-            description: "Lista de empresas retornada com sucesso.",
-            schema: {
+          description: "Lista de empresas retornada com sucesso.",
+          schema: {
             type: "array",
-            items: { $ref: "#/components/schemas/Empresa" } // Retorna um array de Usuários
+            items: { $ref: "#/components/schemas/Empresa" } 
           } 
         },
         401: { description: "Não autorizado." }
@@ -21,15 +22,15 @@ export const empresaPaths = {
     post: {
       tags: ["Empresas"],
       summary: "Cadastra uma nova empresa",
-      // Sem security porque é pública no Express
+      description: "**Acesso: Público.** Permite o cadastro de novas empresas e cooperativas de reciclagem parceiras.",
       requestBody: { 
         required: true,
         content: {
-            "application/json": {
-              schema: { $ref: "#/components/schemas/Empresa" }
-      }
-    }
-  },
+          "application/json": {
+            schema: { $ref: "#/components/schemas/Empresa" }
+          }
+        }
+      },
       responses: {
         201: {
           description: "Empresa cadastrada com sucesso.",
@@ -39,7 +40,7 @@ export const empresaPaths = {
         },
         400: {
           description: "Erro de validação nos dados enviados."
-        },
+        }
       }
     }
   },
@@ -48,6 +49,7 @@ export const empresaPaths = {
     get: {
       tags: ["Empresas"],
       summary: "Busca uma empresa específica pelo ID",
+      description: "**Acesso: Admin ou a própria Empresa.** Permite visualizar os detalhes do perfil institucional da empresa.",
       security: [
         { bearerAuth: [] } // Protege a rota exigindo o token JWT
       ],
@@ -61,8 +63,8 @@ export const empresaPaths = {
       ],
       responses: {
         200: { 
-            description: "Empresa encontrada.",
-            schema: { $ref: "#/components/schemas/Empresa" } 
+          description: "Empresa encontrada.",
+          schema: { $ref: "#/components/schemas/Empresa" } 
         },
         401: { description: "Não autorizado." }
       }
@@ -70,6 +72,7 @@ export const empresaPaths = {
     patch: {
       tags: ["Empresas"],
       summary: "Atualiza os dados de uma empresa específica pelo ID",
+      description: "**Acesso: Admin ou a própria Empresa.** Permite editar os dados cadastrais, contatos ou localização geográfica da instituição.",
       security: [
         { bearerAuth: [] } // Protege a rota exigindo o token JWT
       ],
@@ -81,14 +84,24 @@ export const empresaPaths = {
           schema: { type: "string" }
         }
       ],
+      requestBody: { 
+        required: true,
+        content: {
+          "application/json": {
+            schema: { $ref: "#/components/schemas/Empresa" }
+          }
+        }
+      },
       responses: {
         200: { description: "Dados da empresa atualizados com sucesso." },
+        400: { description: "Erro de validação nos dados enviados." },
         401: { description: "Não autorizado." }
       }
     },
     delete: {
       tags: ["Empresas"],
       summary: "Deleta a conta de uma empresa específica pelo ID",
+      description: "**Acesso exclusivo: Própria Empresa.** Permite à empresa solicitar a remoção definitiva de sua conta da plataforma.",
       security: [
         { bearerAuth: [] } // Protege a rota exigindo o token JWT
       ],

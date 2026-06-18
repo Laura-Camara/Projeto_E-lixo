@@ -8,7 +8,7 @@ export const checkRole = (requiredRole) => {
             return next();
         };
 
-        if(!user || user.role !== requiredRole) {
+        if(!user || !allowedRoles.includes(user.role)) {
             return next(criarErro("Acesso negado. Permissões insuficientes.", 403))
 
         }

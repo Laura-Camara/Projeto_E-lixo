@@ -8,14 +8,14 @@ const router = Router();
 
 router.use(authMiddleware);
 
-router.get('/inventario', itemController.listarItensDoUsuarioLogado);
-router.get('/', checkRole('admin'), itemController.listarTodosOsItens);
-router.post('/', regrasCadastroItem, itemController.criarItem);
+router.get('/inventario', checkRole('user'), itemController.listarItensDoUsuarioLogado);
+router.get('/', checkRole('admin', 'empresa'), itemController.listarTodosOsItens);
+router.post('/', checkRole('admin', 'user'), regrasCadastroItem, itemController.criarItem);
 
-router.get('/:id', itemController.buscarItemPorId);
-router.put('/:id', regrasCadastroItem, itemController.atualizarItem)
-router.delete('/:id', itemController.deleteItem);
+router.get('/:id', checkRole('admin', 'user', 'empresa'), itemController.buscarItemPorId);
+router.put('/:id', checkRole('admin', 'user'), regrasCadastroItem, itemController.atualizarItem)
+router.delete('/:id', checkRole('admin', 'user'), itemController.deleteItem);
 
-router.patch('/:id/coletar', itemController.marcarComoColetado);
+router.patch('/:id/coletar', checkRole('empresa'), itemController.marcarComoColetado);
 
 export default router;

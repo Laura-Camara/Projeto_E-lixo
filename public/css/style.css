@@ -1,0 +1,55 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f7f6;
+    padding: 20px;
+}
+
+h1 {
+    color: #2c3e50;
+    text-align: center;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.empresa-card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    padding: 20px;
+    width: 300px;
+    border-left: 5px solid #27ae60; 
+}
+
+.empresa-card h2 {
+    margin-top: 0;
+    color: #27ae60;
+}
+
+.empresa-card p {
+    color: #555;
+    margin: 5px 0;
+}
+
+.user-card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    padding: 20px;
+    width: 300px;
+    border-left: 5px solid #2980b9; 
+}
+
+.user-card h2 {
+    margin-top: 0;
+    color: #2980b9;
+}
+
+.user-card p {
+    color: #555;
+    margin: 5px 0;
+}

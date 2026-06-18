@@ -1,0 +1,16 @@
+extends layouts/main.pug
+
+block content
+    h1 Lista de Usuários do Sistema
+    .container
+        if users && users.length > 0
+            each user in users
+                div.user-card
+                    // Usamos 'user' (singular), que é o item atual do loop
+                    h3= user.nome
+                    if user.email
+                        p
+                            strong Email: 
+                            span= user.email
+        else
+            p Nenhum usuário cadastrado.

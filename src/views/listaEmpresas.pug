@@ -1,0 +1,20 @@
+extends layouts/main.pug
+
+block content
+    h1 Lista de Empresas Cadastradas
+    .container
+
+        if empresas.length > 0
+            each empresa in empresas
+                div.empresa-card
+                    h3= empresa.nome
+                    p
+                        strong Telefone: 
+                        span= empresa.telefone
+                    
+                    if empresa.email
+                        p
+                            strong Email: 
+                            span= empresa.email
+        else
+            p Nenhuma empresa cadastrada no momento.

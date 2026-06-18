@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { criarErro } from './errorMiddleware.js';
 
-const JWT_SECRET = 'sua-chave-super-secreta-e-longa-12345';
+const JWT_SECRET = process.env.JWT_SECRET;
 
 export const authMiddleware = (req, res, next) => {
     const authHeader = req.headers.authorization;

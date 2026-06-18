@@ -12,7 +12,19 @@ export const listarUsers = async (req, res, next) => {
 
 export const buscarUserPorId = async(req, res, next) => {
     try {
-        const {id} = req.params
+        const {id} = req.params;
+
+        const usuarioLogado = req.user;
+
+        // VALIDAÇÃO DE SEGURANÇA (LGPD & Propriedade do Recurso)
+        // Se NÃO for admin E o userId do token for diferente do ID solicitado na URL... barra o acesso!
+        if (usuarioLogado.role !== 'admin' && usuarioLogado.userId !== id) {
+            return res.status(403).json({
+                sucesso: false,
+                erro: "Acesso negado. Você só tem permissão para visualizar o seu próprio perfil."
+            });
+        }
+
         const user = await userService.buscarUserPorId(id)
         res.status(200).json(user);
 
@@ -34,6 +46,18 @@ export const atualizarPatchUser = async(req, res, next) => {
     try {
         const {id} = req.params;
         const dadosParaAtualizar = req.body;
+
+        // req.user foi injetado pelo authMiddleware e contém os dados do token decodificado
+        const usuarioLogado = req.user; 
+
+        // Se NÃO for administrador E o ID do token for diferente do ID da URL... barra o acesso!
+        if (usuarioLogado.role !== 'admin' && usuarioLogado.userId !== id) {
+            return res.status(403).json({
+                sucesso: false,
+                erro: "Acesso negado. Você só tem permissão para atualizar o seu próprio perfil."
+            });
+        }
+
         const user = await userService.atualizarPatchUser(id, dadosParaAtualizar);
         res.json(user);
 

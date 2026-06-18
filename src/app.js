@@ -33,7 +33,6 @@ app.use('/api/elixo/auth', routerAuthEmpresa);
 app.use('/api/elixo', mainRouter);
 
 
-
 app.use(rotaNaoEncontrada);
 
 app.use(globalErrorHandle);

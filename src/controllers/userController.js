@@ -50,12 +50,6 @@ export const atualizarPatchUser = async(req, res, next) => {
         // req.user foi injetado pelo authMiddleware e contém os dados do token decodificado
         const usuarioLogado = req.user; 
 
-        console.log("=== DEBUG DE SEGURANÇA ===");
-        console.log("ID que veio na URL (id):", id, typeof id);
-        console.log("Objeto req.user completo:", usuarioLogado);
-        console.log("ID de dentro do Token (userId):", usuarioLogado?.userId, typeof usuarioLogado?.userId);
-        console.log("Role de dentro do Token (role):", usuarioLogado?.role);
-
         // Se NÃO for administrador E o ID do token for diferente do ID da URL... barra o acesso!
         if (usuarioLogado.role !== 'admin' && usuarioLogado.userId !== id) {
             return res.status(403).json({

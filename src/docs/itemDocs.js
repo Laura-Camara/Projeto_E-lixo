@@ -1,9 +1,11 @@
 export const itemPaths = {
+
   "/api/elixo/users/itens/": { 
     get: {
       tags: ["Itens"],
       summary: "Lista todos os itens coletáveis",
-      description: "**Acesso: Admin ou Empresa Parceira.** Retorna a listagem geral de todos os resíduos eletrônicos cadastrados no sistema que aguardam coleta.",      security: [
+      description: "**Acesso: Admin ou Empresa Parceira.** Retorna a listagem geral de todos os resíduos eletrônicos cadastrados no sistema que aguardam coleta.",
+      security: [
         { bearerAuth: [] } // Protege a rota exigindo o token JWT
       ],
       responses: {
@@ -20,33 +22,25 @@ export const itemPaths = {
     post: {
       tags: ["Itens"],
       summary: "Cadastra um novo resíduo eletrônico",
-      description: "**Acesso: Usuário (Cidadão).** Permite o cadastro de um novo item de e-lixo informando localização, tipo e condição.",
+      description: "**Acesso: Usuário (Cidadão) ou Admin.** Permite o cadastro de um novo item de e-lixo no ecossistema. O Admin pode utilizar esta rota para realizar lançamentos manuais via suporte.",
       security: [
-        { bearerAuth: [] } // Protege a rota exigindo o token JWT
+        { bearerAuth: [] }
       ],
       requestBody: { 
         required: true,
         content: {
           "application/json": {
-            schema: {
-              $ref: "#/components/schemas/ItemResiduo"
-            }
+            schema: { $ref: "#/components/schemas/ItemResiduo" }
           }
         }
       },
       responses: {
         201: {
           description: "Item cadastrado com sucesso.",
-          schema: {
-            $ref: "#/components/schemas/ItemResiduo"
-          }
+          schema: { $ref: "#/components/schemas/ItemResiduo" }
         },
-        400: {
-          description: "Erro de validação nos dados enviados."
-        },
-        401: {
-          description: "Não autorizado (Token JWT ausente ou inválido)."
-        }
+        400: { description: "Erro de validação nos dados enviados." },
+        401: { description: "Não autorizado (Token JWT ausente ou inválido)." }
       }
     }
   },
@@ -55,9 +49,9 @@ export const itemPaths = {
     get: {
       tags: ["Itens"],
       summary: "Busca um item específico pelo ID",
-      description: "**Acesso: Admin, Empresa ou o Usuário dono do item.** Retorna as informações detalhadas de um resíduo eletrônico específico.",
+      description: "**Acesso: Admin, Empresa ou Usuário.** Retorna as informações detalhadas de um resíduos eletrônico específico a partir do ID selecionado na listagem ou mapa.",
       security: [
-        { bearerAuth: [] } // Protege a rota exigindo o token JWT
+        { bearerAuth: [] }
       ],
       parameters: [
         { in: "path", name: "id", required: true, schema: { type: "string" } }
@@ -73,9 +67,9 @@ export const itemPaths = {
     put: {
       tags: ["Itens"],
       summary: "Atualiza um item específico pelo ID",
-      description: "**Acesso: Usuário dono do item.** Permite modificar os detalhes cadastrais do resíduo eletrônico antes de ser coletado.",
+      description: "**Acesso: Usuário dono ou Admin (Moderação).** Permite modificar os detalhes cadastrais do resíduo eletrônico. O Admin possui este privilégio para atuar na correção ou reclassificação de dados incorretos.",
       security: [
-        { bearerAuth: [] } // Protege a rota exigindo o token JWT
+        { bearerAuth: [] }
       ],
       parameters: [
         { in: "path", name: "id", required: true, schema: { type: "string" } }
@@ -97,9 +91,9 @@ export const itemPaths = {
     delete: {
       tags: ["Itens"],
       summary: "Deleta um item específico pelo ID",
-      description: "**Acesso: Usuário dono do item.** Cancela o descarte e remove o registro do resíduo eletrônico da plataforma.",
+      description: "**Acesso: Usuário dono ou Admin (Moderação).** Cancela o descarte e remove o registro do sistema. O Admin possui este privilégio para fins de moderação, saneamento da base de dados e eliminação de registros falsos (poluição do sistema).",
       security: [
-        { bearerAuth: [] } // Protege a rota exigindo o token JWT
+        { bearerAuth: [] }
       ],
       parameters: [
         { in: "path", name: "id", required: true, schema: { type: "string" } }
@@ -114,14 +108,14 @@ export const itemPaths = {
   "/api/elixo/users/itens/inventario": {
     get: {
       tags: ["Itens"],
-      summary: "Lista o inventário",
-      description: "**Acesso: Usuário dono do item.** Retorna o inventário com detalhes de todos os resíduos armazenados para descarte do usuário.",
+      summary: "Lista o inventário do usuário logado",
+      description: "**Acesso exclusivo: Usuário (Cidadão).** Funciona como uma área pessoal logada (estilo 'Meus Pedidos'). Retorna o histórico de descarte e o estado atual de todos os resíduos cadastrados especificamente pelo cidadão autenticado.",
       security: [
-        { bearerAuth: [] } // Protege a rota exigindo o token JWT
+        { bearerAuth: [] }
       ],
       responses: {
         200: { 
-          description: "Inventário retornado com sucesso contendo a lista de resíduos.",
+          description: "Inventário pessoal do usuário retornado com sucesso.",
           schema: {
             type: "array",
             items: { $ref: "#/components/schemas/ItemResiduo" }
@@ -136,9 +130,9 @@ export const itemPaths = {
     patch: {
       tags: ["Itens"],
       summary: "Atualiza o status do item para coletado pelo ID",
-      description: "**Acesso exclusivo: Empresa Parceira.** Registra que a coleta física do resíduo eletrônico foi realizada com sucesso pela instituição.",
+      description: "**Acesso exclusivo: Empresa Parceira.** Registra que a coleta física do resíduo eletrônico foi realizada com sucesso no mundo real pela instituição, alterando seu estado final para 'coletado'.",
       security: [
-        { bearerAuth: [] } // Protege a rota exigindo o token JWT
+        { bearerAuth: [] }
       ],
       parameters: [
         { in: "path", name: "id", required: true, schema: { type: "string" } }

@@ -1,6 +1,6 @@
 import { criarErro } from "./errorMiddleware.js";
 
-export const checkRole = (requiredRole) => {
+export const checkRole = (...allowedRoles) => {
     return (req, res, next) => {
         const user = req.user;
 

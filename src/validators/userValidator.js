@@ -47,5 +47,9 @@ export const regrasCadastroUser = [
         .if(body('role').not().equals('admin'))
         .notEmpty().withMessage('O CEP é obrigatório.'),
 
+    body('endereco.uf')
+        .if(body('role').not().equals('admin'))
+        .notEmpty().withMessage('O estado é obrigatório.'),
+
     verificarErros
 ]

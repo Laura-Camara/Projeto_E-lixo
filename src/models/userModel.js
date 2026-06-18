@@ -20,7 +20,12 @@ const enderecoSchema = new mongoose.Schema({
     cep: {
         type: String,
         required: [true, 'O CEP é obrigatório.']
-    }
+    },
+    uf: {
+        type: String,
+        required: [true, 'O estado é obrigatório.'],
+        trim: true
+        }
 }, { _id: false }); 
 
 const userSchema = new mongoose.Schema({

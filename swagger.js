@@ -106,6 +106,14 @@ const empresaSchema = {
         uf: { type: "string", maxLength: 2, example: "RN" },
         cep: { type: "string", example: "59000-111" }
       }
+    },
+    localizacao: {
+      type: "object",
+      required: ["lat", "lng"],
+      properties: {
+        lat: { type: "number", example: -5.7954 },
+        lng: { type: "number", example: -35.2120 }
+      }
     }
   }
 };

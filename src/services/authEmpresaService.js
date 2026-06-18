@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import empresaRepository from '../repositories/empresaRepository.js';
 import { criarErro } from "../middlewares/errorMiddleware.js";
 
-const JWT_SECRET = 'sua-chave-super-secreta-e-longa-12345';
+const JWT_SECRET = process.env.JWT_SECRET;
 
 export const autenticarEmpresa = async (login, senha) => {
     const empresa = await empresaRepository.findByLogin(login)

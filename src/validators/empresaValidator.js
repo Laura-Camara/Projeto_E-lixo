@@ -40,6 +40,8 @@ export const regrasCadastroEmpresa = [
 
     body('endereco.cep').notEmpty().withMessage('O CEP é obrigatório.'),
 
+    body('endereco.uf').notEmpty().withMessage('O estado é obrigatório.'),
+
     body('localizacao')
     .notEmpty().withMessage('A localização geográfica da empresa é obrigatória.'),
 

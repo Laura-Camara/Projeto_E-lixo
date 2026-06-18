@@ -70,6 +70,11 @@ const empresaSchema = new mongoose.Schema({
             required: [true, 'O CEP é obrigatório.'],
             trim: true,
             minlength: [8, 'O CEP deve conter pelo menos 8 caracteres.']
+        },
+        uf: {
+            type: String,
+            required: [true, 'O estado é obrigatório.'],
+            trim: true
         }
     },
     localizacao: {
